@@ -1,1 +1,0 @@
-<h1>Hello gamer! Welcome to the Gaming Inventory application</h1>
