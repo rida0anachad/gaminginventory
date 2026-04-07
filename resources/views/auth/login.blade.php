@@ -90,7 +90,12 @@
                             </div>
                         </div>
                     </div>
-                    
+                    <div class="text-center m-t-10">
+                        <p class="text-muted">
+                            Don't have an account? 
+                            <a href="{{ route('register') }}" class="text-info">Create Account</a>
+                        </p>
+                    </div>
                     <div class="form-group text-center">
                         <div class="col-xs-12 p-b-20">
                             <button class="btn btn-block btn-lg btn-info" type="submit">Log In</button>
