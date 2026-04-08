@@ -221,14 +221,14 @@
     </li>
     <li class="sidebar-item">
         <a class="sidebar-link waves-effect waves-dark {{ request()->routeIs('stockin.*') ? 'active' : '' }}"
-           href="#" aria-expanded="false">
+           href="{{ route('stockin.index') }}" aria-expanded="false">
             <i class="mdi mdi-truck-delivery"></i>
             <span class="hide-menu">Stock In</span>
         </a>
     </li>
     <li class="sidebar-item">
         <a class="sidebar-link waves-effect waves-dark {{ request()->routeIs('sales.*') ? 'active' : '' }}"
-           href="#" aria-expanded="false">
+           href="{{ route('sales.index') }}" aria-expanded="false">
             <i class="mdi mdi-receipt"></i>
             <span class="hide-menu">Sales / Invoices</span>
         </a>
@@ -261,14 +261,14 @@
     </li>
     <li class="sidebar-item">
         <a class="sidebar-link waves-effect waves-dark"
-           href="#" aria-expanded="false">
+           href="{{ route('reports.sales') }}" aria-expanded="false">
             <i class="mdi mdi-chart-bar"></i>
             <span class="hide-menu">Sales Report</span>
         </a>
     </li>
     <li class="sidebar-item">
         <a class="sidebar-link waves-effect waves-dark"
-           href="#" aria-expanded="false">
+           href="{{ route('reports.stockin') }}" aria-expanded="false">
             <i class="mdi mdi-chart-line"></i>
             <span class="hide-menu">Stock In Report</span>
         </a>

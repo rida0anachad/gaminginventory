@@ -17,10 +17,8 @@ class DashboardController extends Controller
             'totalPublishers'  => \App\Models\Publisher::count(),
             'totalGames'       => \App\Models\Game::count(),
             'outOfStock'       => \App\Models\GameStock::where('qty', 0)->count(),
-            'newReleases'      => \App\Models\Game::whereHas('stock', function($q) {
-                $q->where('release_date', '>=', now()->subDays(30));
-            })->count(),
-            'totalSales'       => 0, 
+            'newReleases'      => \App\Models\GameStock::where('release_date', '>=',now()->subDays(30))->count(),
+            'totalSales'       => \App\Models\Sale::count(),
             'recentPublishers' => \App\Models\Publisher::latest()->take(5)->get(),
         ]);
     }

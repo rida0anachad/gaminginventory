@@ -7,6 +7,10 @@ use App\Http\Controllers\PublisherController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\GameController;
 use App\Http\Controllers\GameStockController;
+use App\Http\Controllers\StockInController;
+use App\Http\Controllers\SaleController;
+use App\Http\Controllers\ReportController;
+
 
 // authentification 
 Route::middleware('guest')->group(function () {
@@ -43,6 +47,22 @@ Route::middleware('auth')->group(function () {
     Route::middleware('auth')->group(function () {
     // ... routes existantes ...
     Route::resource('gamestock', GameStockController::class);
+}); 
+    // Stock In
+    Route::middleware('auth')->group(function () {
+    // ... routes existantes ...
+    Route::resource('stockin', StockInController::class);
+});
+    // Sales
+    Route::middleware('auth')->group(function () {
+    // ... routes existantes ...
+    Route::resource('sales', SaleController::class);
+});
+    // Reports
+    Route::middleware('auth')->group(function () {
+    // ... routes existantes ...
+    Route::get('reports/sales', [ReportController::class, 'salesReport'])->name('reports.sales');
+    Route::get('reports/stockin', [ReportController::class, 'stockInReport'])->name('reports.stockin');
 });
 
   //Route::middleware('auth')->group(function () {
