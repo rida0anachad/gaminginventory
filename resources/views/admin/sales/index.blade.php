@@ -65,20 +65,25 @@
                                     </strong>
                                 </td>
                                 <td>
-                                    <a href="{{ route('sales.edit', $sale) }}"
-                                       class="btn btn-sm btn-info">
-                                        <i class="mdi mdi-pencil"></i> Edit
-                                    </a>
-                                    <form action="{{ route('sales.destroy', $sale) }}"
-                                          method="POST" class="d-inline"
-                                          onsubmit="return confirm('Delete this sale?')">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button class="btn btn-sm btn-danger">
-                                            <i class="mdi mdi-delete"></i> Delete
-                                        </button>
-                                    </form>
-                                </td>
+                                        <a href="{{ route('sales.show', $sale) }}"
+                                             class="btn btn-sm btn-success">
+                                        <i class="mdi mdi-eye"></i> View
+                                         </a>
+                                     <a href="{{ route('sales.edit', $sale) }}"
+                                             class="btn btn-sm btn-info">
+                                          <i class="mdi mdi-pencil"></i> Edit
+                                                         </a>
+                                         <form action="{{ route('sales.destroy', $sale) }}"
+                                        method="POST" class="d-inline"
+                                            onsubmit="return confirm('Delete this sale?')">
+                                         @csrf
+                                         @method('DELETE')
+                                         <button class="btn btn-sm btn-danger">
+                                          <i class="mdi mdi-delete"></i> Delete
+                                          </button>
+                                                 </form>
+                                    </td>
+                                
                             </tr>
                             @empty
                             <tr>

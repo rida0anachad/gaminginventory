@@ -11,7 +11,6 @@ use App\Http\Controllers\StockInController;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\ReportController;
 
-
 // authentification 
 Route::middleware('guest')->group(function () {
     // Login
@@ -64,6 +63,7 @@ Route::middleware('auth')->group(function () {
     Route::get('reports/sales', [ReportController::class, 'salesReport'])->name('reports.sales');
     Route::get('reports/stockin', [ReportController::class, 'stockInReport'])->name('reports.stockin');
 });
+    
 
   //Route::middleware('auth')->group(function () {
     //Route::get('/admin/dashboard', function () {

@@ -19,4 +19,13 @@ class Game extends Model
     {
         return $this->hasOne(GameStock::class);
     }
+
+    public function saleItems()
+    {
+    return $this->hasMany(SaleItem::class);
+    }
+    public function stockIns()
+    {
+    return $this->hasMany(StockIn::class);
+    }
 }
