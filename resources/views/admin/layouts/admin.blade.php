@@ -208,7 +208,7 @@
     </li>
     <li class="sidebar-item">
         <a class="sidebar-link waves-effect waves-dark {{ request()->routeIs('stock.*') ? 'active' : '' }}"
-           href="#" aria-expanded="false">
+           href="{{ route('gamestock.index') }}" aria-expanded="false">
             <i class="mdi mdi-package-variant"></i>
             <span class="hide-menu">Games Stock</span>
         </a>

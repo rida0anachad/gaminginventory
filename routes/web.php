@@ -6,8 +6,9 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PublisherController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\GameController;
+use App\Http\Controllers\GameStockController;
 
-// ── Authentification ──────────────────────────────────────────
+// authentification 
 Route::middleware('guest')->group(function () {
     // Login
     Route::get('/', [AuthController::class, 'showLogin'])->name('login');
@@ -37,6 +38,11 @@ Route::middleware('auth')->group(function () {
     Route::middleware('auth')->group(function () {
     // ... routes existantes ...
     Route::resource('games', GameController::class);
+});
+    // game stock
+    Route::middleware('auth')->group(function () {
+    // ... routes existantes ...
+    Route::resource('gamestock', GameStockController::class);
 });
 
   //Route::middleware('auth')->group(function () {
