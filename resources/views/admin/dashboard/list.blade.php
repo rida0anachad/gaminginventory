@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.admin') {{-- Tip: Rename this file to dashboard.blade.php --}}
 
 @section('page-title', 'Dashboard — Admin Panel')
 @section('page-heading', 'Dashboard')
@@ -12,114 +12,113 @@
 @section('content')
 
     {{-- Stat Cards --}}
-    {{-- ❌ Actuel : New Clients, New Projects, New Invoices, New Sales --}}
-{{-- ✅ Remplacer par les 6 indicateurs de ton projet --}}
+    <div class="row">
 
-<div class="row">
-
-    {{-- Total Members --}}
-    <div class="col-lg-2 col-md-4 col-sm-6">
-        <div class="card">
-            <div class="card-body">
-                <div class="row align-items-center">
-                    <div class="col-8">
-                        <i class="mdi mdi-account-multiple font-20 text-info"></i>
-                        <p class="font-14 m-b-5">Total Members</p>
-                    </div>
-                    <div class="col-4">
-                        <h2 class="font-light text-right mb-0">0</h2>
+        {{-- Total Members --}}
+        <div class="col-lg-2 col-md-4 col-sm-6">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col-8">
+                            <i class="mdi mdi-account-multiple font-20 text-info"></i>
+                            <p class="font-14 m-b-5">Total Members</p>
+                        </div>
+                        <div class="col-4">
+                            <h2 class="font-light text-right mb-0">{{ $totalMembers ?? 0 }}</h2>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    {{-- Total Publishers --}}
-    <div class="col-lg-2 col-md-4 col-sm-6">
-        <div class="card">
-            <div class="card-body">
-                <div class="row align-items-center">
-                    <div class="col-8">
-                        <i class="mdi mdi-domain font-20 text-success"></i>
-                        <p class="font-14 m-b-5">Publishers</p>
-                    </div>
-                    <div class="col-4">
-                        <h2 class="font-light text-right mb-0">0</h2>
+        {{-- Total Publishers --}}
+        <div class="col-lg-2 col-md-4 col-sm-6">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col-8">
+                            <i class="mdi mdi-domain font-20 text-success"></i>
+                            <p class="font-14 m-b-5">Publishers</p>
+                        </div>
+                        <div class="col-4">
+                            <h2 class="font-light text-right mb-0">{{ $totalPublishers ?? 0 }}</h2>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    {{-- Total Games --}}
-    <div class="col-lg-2 col-md-4 col-sm-6">
-        <div class="card">
-            <div class="card-body">
-                <div class="row align-items-center">
-                    <div class="col-8">
-                        <i class="mdi mdi-gamepad-variant font-20 text-purple"></i>
-                        <p class="font-14 m-b-5">Total Games</p>
-                    </div>
-                    <div class="col-4">
-                        <h2 class="font-light text-right mb-0">0</h2>
+        {{-- Total Games --}}
+        <div class="col-lg-2 col-md-4 col-sm-6">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col-8">
+                            <i class="mdi mdi-gamepad-variant font-20 text-purple"></i>
+                            <p class="font-14 m-b-5">Total Games</p>
+                        </div>
+                        <div class="col-4">
+                            <h2 class="font-light text-right mb-0">{{ $totalGames ?? 0 }}</h2>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    {{-- Out of Stock --}}
-    <div class="col-lg-2 col-md-4 col-sm-6">
-        <div class="card">
-            <div class="card-body">
-                <div class="row align-items-center">
-                    <div class="col-8">
-                        <i class="mdi mdi-alert font-20 text-danger"></i>
-                        <p class="font-14 m-b-5">Out of Stock</p>
-                    </div>
-                    <div class="col-4">
-                        <h2 class="font-light text-right mb-0">0</h2>
+        {{-- Out of Stock --}}
+        <div class="col-lg-2 col-md-4 col-sm-6">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col-8">
+                            <i class="mdi mdi-alert font-20 text-danger"></i>
+                            <p class="font-14 m-b-5">Out of Stock</p>
+                        </div>
+                        <div class="col-4">
+                            <h2 class="font-light text-right mb-0">{{ $outOfStock ?? 0 }}</h2>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    {{-- New Releases --}}
-    <div class="col-lg-2 col-md-4 col-sm-6">
-        <div class="card">
-            <div class="card-body">
-                <div class="row align-items-center">
-                    <div class="col-8">
-                        <i class="mdi mdi-new-box font-20 text-warning"></i>
-                        <p class="font-14 m-b-5">New Releases</p>
-                    </div>
-                    <div class="col-4">
-                        <h2 class="font-light text-right mb-0">0</h2>
+        {{-- New Releases --}}
+        <div class="col-lg-2 col-md-4 col-sm-6">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col-8">
+                            <i class="mdi mdi-new-box font-20 text-warning"></i>
+                            <p class="font-14 m-b-5">New Releases</p>
+                        </div>
+                        <div class="col-4">
+                            <h2 class="font-light text-right mb-0">{{ $newReleases ?? 0 }}</h2>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    {{-- Total Sales --}}
-    <div class="col-lg-2 col-md-4 col-sm-6">
-        <div class="card">
-            <div class="card-body">
-                <div class="row align-items-center">
-                    <div class="col-8">
-                        <i class="mdi mdi-receipt font-20 text-primary"></i>
-                        <p class="font-14 m-b-5">Total Sales</p>
-                    </div>
-                    <div class="col-4">
-                        <h2 class="font-light text-right mb-0">0</h2>
+        {{-- Total Sales --}}
+        <div class="col-lg-2 col-md-4 col-sm-6">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col-8">
+                            <i class="mdi mdi-receipt font-20 text-primary"></i>
+                            <p class="font-14 m-b-5">Total Sales</p>
+                        </div>
+                        <div class="col-4">
+                            <h2 class="font-light text-right mb-0">{{ $totalSales ?? 0 }}</h2>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+
     </div>
 
-</div>
+    {{-- (The rest of your Sales Ratio, Weather, Campaign Status, and To-Do lists remain untouched below this) --}}
 
     {{-- Sales Ratio + Weather --}}
     <div class="row">

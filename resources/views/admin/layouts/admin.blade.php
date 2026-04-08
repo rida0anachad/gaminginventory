@@ -181,13 +181,13 @@
                 <nav class="sidebar-nav">
 <ul id="sidebarnav">
 
-    {{-- Dashboard --}}
+    {{-- Main --}}
     <li class="nav-small-cap">
         <i class="mdi mdi-dots-horizontal"></i>
         <span class="hide-menu">Main</span>
     </li>
     <li class="sidebar-item">
-        <a class="sidebar-link waves-effect waves-dark"
+        <a class="sidebar-link waves-effect waves-dark {{ request()->routeIs('dashboard') ? 'active' : '' }}"
            href="{{ route('dashboard') }}" aria-expanded="false">
             <i class="mdi mdi-view-dashboard"></i>
             <span class="hide-menu">Dashboard</span>
@@ -200,14 +200,14 @@
         <span class="hide-menu">Catalogue</span>
     </li>
     <li class="sidebar-item">
-        <a class="sidebar-link waves-effect waves-dark"
+        <a class="sidebar-link waves-effect waves-dark {{ request()->routeIs('games.*') ? 'active' : '' }}"
            href="#" aria-expanded="false">
             <i class="mdi mdi-gamepad-variant"></i>
             <span class="hide-menu">Games Library</span>
         </a>
     </li>
     <li class="sidebar-item">
-        <a class="sidebar-link waves-effect waves-dark"
+        <a class="sidebar-link waves-effect waves-dark {{ request()->routeIs('stock.*') ? 'active' : '' }}"
            href="#" aria-expanded="false">
             <i class="mdi mdi-package-variant"></i>
             <span class="hide-menu">Games Stock</span>
@@ -220,14 +220,14 @@
         <span class="hide-menu">Transactions</span>
     </li>
     <li class="sidebar-item">
-        <a class="sidebar-link waves-effect waves-dark"
+        <a class="sidebar-link waves-effect waves-dark {{ request()->routeIs('stockin.*') ? 'active' : '' }}"
            href="#" aria-expanded="false">
             <i class="mdi mdi-truck-delivery"></i>
             <span class="hide-menu">Stock In</span>
         </a>
     </li>
     <li class="sidebar-item">
-        <a class="sidebar-link waves-effect waves-dark"
+        <a class="sidebar-link waves-effect waves-dark {{ request()->routeIs('sales.*') ? 'active' : '' }}"
            href="#" aria-expanded="false">
             <i class="mdi mdi-receipt"></i>
             <span class="hide-menu">Sales / Invoices</span>
@@ -240,17 +240,17 @@
         <span class="hide-menu">People</span>
     </li>
     <li class="sidebar-item">
-        <a class="sidebar-link waves-effect waves-dark"
+        <a class="sidebar-link waves-effect waves-dark {{ request()->routeIs('members.*') ? 'active' : '' }}"
            href="#" aria-expanded="false">
             <i class="mdi mdi-account-multiple"></i>
             <span class="hide-menu">Members</span>
         </a>
     </li>
     <li class="sidebar-item">
-        <a class="sidebar-link waves-effect waves-dark"
-           href="#" aria-expanded="false">
-            <i class="mdi mdi-domain"></i>
-            <span class="hide-menu">Publishers</span>
+        <a class="sidebar-link waves-effect waves-dark {{ request()->routeIs('publishers.*') ? 'active' : '' }}"
+           href="{{ route('publishers.index') }}" aria-expanded="false">
+           <i class="mdi mdi-domain"></i>
+           <span class="hide-menu">Publishers</span>    
         </a>
     </li>
 
@@ -274,20 +274,18 @@
         </a>
     </li>
 
-    {{-- Logout --}}
+    {{-- Account --}}
     <li class="nav-small-cap">
         <i class="mdi mdi-dots-horizontal"></i>
         <span class="hide-menu">Account</span>
     </li>
     <li class="sidebar-item">
         <a class="sidebar-link waves-effect waves-dark" href="#"
-           onclick="event.preventDefault();
-                    document.getElementById('logout-form-sidebar').submit();">
+           onclick="event.preventDefault(); document.getElementById('logout-form-sidebar').submit();">
             <i class="mdi mdi-power"></i>
             <span class="hide-menu">Log Out</span>
         </a>
-        <form id="logout-form-sidebar" action="{{ route('logout') }}"
-              method="POST" class="d-none">
+        <form id="logout-form-sidebar" action="{{ route('logout') }}" method="POST" class="d-none">
             @csrf
         </form>
     </li>

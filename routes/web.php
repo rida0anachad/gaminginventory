@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\PublisherController;
 
 // ── Authentification ──────────────────────────────────────────
 Route::middleware('guest')->group(function () {
@@ -17,27 +18,25 @@ Route::middleware('guest')->group(function () {
 
 Route::middleware('auth')->group(function () {
     // Dashboard
-    Route::get('/admin/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
+   Route::get('/admin/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
 
     // Logout
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+    
+    // Publishers
+    Route::resource('publishers', PublisherController::class);
 }); 
-  Route::middleware('auth')->group(function () {
-    Route::get('/dashboard', function () {
-        return view('admin.dashboard.list');  // ← changer ici
-    })->name('dashboard');
-});
+
+  //Route::middleware('auth')->group(function () {
+    //Route::get('/admin/dashboard', function () {
+      //  return view('admin.dashboard.list');  // ← changer ici
+    //})->name('dashboard');
+//});
 // Logout (protégé par auth)
 //Route::post('/logout', [AuthController::class, 'logout'])
   //  ->name('logout')
    // ->middleware('auth');
 
-// ── Dashboard (à protéger) ────────────────────────────────────
-//Route::middleware('auth')->group(function () {
-  //  Route::get('/dashboard', function () {
-    //    return view('dashboard');
-    //})->name('dashboard');
-//});
 
 //Route::get('admin/dashboard', [DashboardController::class, 'dashboard']);
 //Route::middleware('auth')->group(function () {
