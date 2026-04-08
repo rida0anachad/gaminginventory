@@ -1,4 +1,4 @@
-@extends('layouts.admin') {{-- Tip: Rename this file to dashboard.blade.php --}}
+@extends('admin.layouts.admin') {{-- Tip: Rename this file to dashboard.blade.php --}}
 
 @section('page-title', 'Dashboard — Admin Panel')
 @section('page-heading', 'Dashboard')
