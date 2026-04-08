@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PublisherController;
 use App\Http\Controllers\MemberController;
+use App\Http\Controllers\GameController;
 
 // ── Authentification ──────────────────────────────────────────
 Route::middleware('guest')->group(function () {
@@ -31,6 +32,11 @@ Route::middleware('auth')->group(function () {
     Route::middleware('auth')->group(function () {
     // ... routes existantes ...
     Route::resource('members', MemberController::class);
+});
+    // Games
+    Route::middleware('auth')->group(function () {
+    // ... routes existantes ...
+    Route::resource('games', GameController::class);
 });
 
   //Route::middleware('auth')->group(function () {

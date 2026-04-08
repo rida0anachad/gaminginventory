@@ -201,7 +201,7 @@
     </li>
     <li class="sidebar-item">
         <a class="sidebar-link waves-effect waves-dark {{ request()->routeIs('games.*') ? 'active' : '' }}"
-           href="#" aria-expanded="false">
+           href="{{ route('games.index') }}" aria-expanded="false">
             <i class="mdi mdi-gamepad-variant"></i>
             <span class="hide-menu">Games Library</span>
         </a>
