@@ -18,7 +18,7 @@ class AuthController extends Controller
     // ── Traiter le formulaire login ───────────────────────────
     public function login(Request $request)
     {
-        // Validation côté serveur (obligatoire selon le PDF)
+        // Validation côté serveur 
         $request->validate([
             'email'    => 'required|email',
             'password' => 'required|string',
