@@ -241,7 +241,7 @@
     </li>
     <li class="sidebar-item">
         <a class="sidebar-link waves-effect waves-dark {{ request()->routeIs('members.*') ? 'active' : '' }}"
-           href="#" aria-expanded="false">
+           href="{{ route('members.index') }}" aria-expanded="false">
             <i class="mdi mdi-account-multiple"></i>
             <span class="hide-menu">Members</span>
         </a>

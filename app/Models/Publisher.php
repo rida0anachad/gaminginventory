@@ -13,4 +13,13 @@ class Publisher extends Model
         'contact_number',
         'address',
     ];
+    public function games()
+    {
+        return $this->hasMany(Game::class);
+    }
+
+    public function stockIns()
+    {
+        return $this->hasMany(StockIn::class);
+    }
 }

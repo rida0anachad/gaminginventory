@@ -10,17 +10,26 @@ return new class extends Migration
      * Run the migrations.
      */
     public function up(): void
-{
-    Schema::create('sale_items', function (Blueprint $table) {
+    {
+        Schema::create('sale_items', function (Blueprint $table) {
         $table->id();
-        $table->foreignId('sale_id')->constrained()->onDelete('cascade');
-        $table->foreignId('game_id')->constrained('games')->onDelete('cascade');
+        
+        // Explicitly point to the 'sales' table we kept from 16:20
+        $table->foreignId('sale_id')
+              ->constrained('sales') 
+              ->onDelete('cascade');
+
+        // Link to your games table
+        $table->foreignId('game_id')
+              ->constrained('games')
+              ->onDelete('cascade');
+
         $table->integer('quantity');
         $table->decimal('unit_price', 10, 2);
         $table->decimal('subtotal', 10, 2);
         $table->timestamps();
     });
-}
+    }
 
     /**
      * Reverse the migrations.

@@ -10,18 +10,18 @@ return new class extends Migration
      * Run the migrations.
      */
     public function up(): void
-{
-    Schema::create('members', function (Blueprint $table) {
+    {
+        Schema::create('members', function (Blueprint $table) {
         $table->id();
-        $table->string('member_id')->unique();
-        $table->string('name');
-        $table->string('contact_number')->nullable();
+        $table->string('member_id', 20)->unique();
+        $table->string('name', 100);
+        $table->string('contact_number', 50)->nullable();
         $table->text('address')->nullable();
-        $table->string('favorite_genre')->nullable();
-        $table->string('platform_preference')->nullable();
+        $table->string('favorite_genre', 80)->nullable();
+        $table->string('platform_preference', 80)->nullable();
         $table->timestamps();
     });
-}
+    }
 
     /**
      * Reverse the migrations.
