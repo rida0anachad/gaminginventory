@@ -16,11 +16,8 @@ return new class extends Migration
         $table->foreignId('game_id')
               ->constrained()
               ->onDelete('cascade');
-        $table->string('sku', 100)->nullable()->unique();
-        $table->date('release_date')->nullable();
         $table->integer('qty')->default(0);
-        $table->decimal('mrp', 8, 2)->default(0);
-        $table->decimal('rate', 8, 2)->default(0);
+        $table->decimal('sale_rate', 8, 2)->default(0);
         $table->timestamps();
     });
     }

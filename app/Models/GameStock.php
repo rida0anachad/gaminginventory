@@ -7,7 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class GameStock extends Model
 {
     protected $fillable = [
-        'game_id', 'sku', 'release_date', 'qty', 'mrp', 'rate'
+        'game_id',
+        'qty',
+        'sale_rate',
     ];
 
     public function game()

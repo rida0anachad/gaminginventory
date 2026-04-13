@@ -7,9 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 class StockIn extends Model
 {
     protected $fillable = [
-        'transaction_id', 'publisher_id', 'game_id',
-         'quantity_received', 'reference_number',
-        'arrival_date', 'total_cost', 'payment_status'
+        'transaction_id',
+        'publisher_id',
+        'game_id',
+        'quantity_received',
+        'cost_price',
+        'sale_rate',
+        'reference_number',
+        'arrival_date',
+        'payment_status',
     ];
 
     public function publisher()
@@ -19,6 +25,6 @@ class StockIn extends Model
 
     public function game()
     {
-    return $this->belongsTo(Game::class);
+        return $this->belongsTo(Game::class);
     }
 }

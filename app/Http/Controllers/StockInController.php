@@ -29,15 +29,18 @@ class StockInController extends Controller
             'publisher_id'      => 'required|exists:publishers,id',
             'game_id'           => 'required|exists:games,id',
             'quantity_received' => 'required|integer|min:1',
+            'cost_price'        => 'required|numeric|min:0',
+            'sale_rate'         => 'required|numeric|min:0',
             'reference_number'  => 'nullable|string|max:100',
             'arrival_date'      => 'required|date',
-            'total_cost'        => 'required|numeric|min:0',
             'payment_status'    => 'required|in:paid,pending,partial',
         ], [
             'publisher_id.required'      => 'Please select a publisher.',
             'game_id.required'           => 'Please select a game.',
             'quantity_received.required' => 'Quantity received is required.',
             'quantity_received.min'      => 'Quantity must be at least 1.',
+            'cost_price.required'        => 'Cost price is required.',
+            'sale_rate.required'         => 'Sale rate is required.',
         ]);
 
         try {
@@ -50,32 +53,35 @@ class StockInController extends Controller
                 'publisher_id'      => $request->publisher_id,
                 'game_id'           => $request->game_id,
                 'quantity_received' => $request->quantity_received,
+                'cost_price'        => $request->cost_price,
+                'sale_rate'         => $request->sale_rate,
                 'reference_number'  => $request->reference_number,
                 'arrival_date'      => $request->arrival_date,
-                'total_cost'        => $request->total_cost,
                 'payment_status'    => $request->payment_status,
             ]);
 
-            // 2. AUGMENTER le stock du jeu
+            // 2. Mettre à jour GameStock
             $stock = GameStock::where('game_id', $request->game_id)->first();
 
             if ($stock) {
-                // Stock existe → on augmente la quantité
-                $stock->increment('qty', $request->quantity_received);
+                $stock->update([
+                    'qty'       => $stock->qty + $request->quantity_received,
+                    'sale_rate' => $request->sale_rate,
+                ]);
             } else {
-                // Stock n'existe pas encore → on le crée
                 GameStock::create([
-                    'game_id' => $request->game_id,
-                    'qty'     => $request->quantity_received,
-                    'mrp'     => 0,
-                    'rate'    => 0,
+                    'game_id'   => $request->game_id,
+                    'qty'       => $request->quantity_received,
+                    'sale_rate' => $request->sale_rate,
                 ]);
             }
 
             return redirect()->route('stockin.index')
-                ->with('success', 'Stock In saved. '
-                    . $request->quantity_received
-                    . ' units added to stock.');
+                ->with('success', $request->quantity_received
+                    . ' units of "'
+                    . Game::find($request->game_id)->title
+                    . '" added to stock at $'
+                    . $request->sale_rate . '/unit.');
 
         } catch (\Exception $e) {
             return back()->withInput()
@@ -96,9 +102,10 @@ class StockInController extends Controller
             'publisher_id'      => 'required|exists:publishers,id',
             'game_id'           => 'required|exists:games,id',
             'quantity_received' => 'required|integer|min:1',
+            'cost_price'        => 'required|numeric|min:0',
+            'sale_rate'         => 'required|numeric|min:0',
             'reference_number'  => 'nullable|string|max:100',
             'arrival_date'      => 'required|date',
-            'total_cost'        => 'required|numeric|min:0',
             'payment_status'    => 'required|in:paid,pending,partial',
         ]);
 
@@ -113,12 +120,12 @@ class StockInController extends Controller
             $newStock = GameStock::where('game_id', $request->game_id)->first();
             if ($newStock) {
                 $newStock->increment('qty', $request->quantity_received);
+                $newStock->update(['sale_rate' => $request->sale_rate]);
             } else {
                 GameStock::create([
-                    'game_id' => $request->game_id,
-                    'qty'     => $request->quantity_received,
-                    'mrp'     => 0,
-                    'rate'    => 0,
+                    'game_id'   => $request->game_id,
+                    'qty'       => $request->quantity_received,
+                    'sale_rate' => $request->sale_rate,
                 ]);
             }
 
@@ -126,9 +133,10 @@ class StockInController extends Controller
                 'publisher_id'      => $request->publisher_id,
                 'game_id'           => $request->game_id,
                 'quantity_received' => $request->quantity_received,
+                'cost_price'        => $request->cost_price,
+                'sale_rate'         => $request->sale_rate,
                 'reference_number'  => $request->reference_number,
                 'arrival_date'      => $request->arrival_date,
-                'total_cost'        => $request->total_cost,
                 'payment_status'    => $request->payment_status,
             ]);
 
@@ -144,7 +152,7 @@ class StockInController extends Controller
     public function destroy(StockIn $stockin)
     {
         try {
-            // Annuler le stock avant suppression
+            // Annuler le stock
             $stock = GameStock::where('game_id', $stockin->game_id)->first();
             if ($stock) {
                 $stock->decrement('qty', $stockin->quantity_received);
@@ -153,7 +161,7 @@ class StockInController extends Controller
             $stockin->delete();
 
             return redirect()->route('stockin.index')
-                ->with('success', 'Stock In deleted and stock updated.');
+                ->with('success', 'Stock In deleted and stock reversed.');
 
         } catch (\Exception $e) {
             return back()->with('error', 'Error: ' . $e->getMessage());

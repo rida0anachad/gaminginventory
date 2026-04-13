@@ -12,7 +12,6 @@
     </div>
 @endif
 
-{{-- Info box --}}
 <div class="alert alert-info">
     <i class="mdi mdi-information m-r-5"></i>
     Stock quantities are updated automatically :
@@ -34,9 +33,6 @@
                                 <th>Platform</th>
                                 <th>Genre</th>
                                 <th>Publisher</th>
-                                <th>SKU</th>
-                                <th>Release Date</th>
-                                <th>M.R.P</th>
                                 <th>Sale Rate</th>
                                 <th>Qty Available</th>
                             </tr>
@@ -53,14 +49,11 @@
                                 </td>
                                 <td>{{ $stock->game->genre ?? '—' }}</td>
                                 <td>{{ $stock->game->publisher->company_name ?? '—' }}</td>
-                                <td><code>{{ $stock->sku ?? '—' }}</code></td>
                                 <td>
-                                    {{ $stock->release_date
-                                        ? \Carbon\Carbon::parse($stock->release_date)->format('d/m/Y')
-                                        : '—' }}
+                                    <strong class="text-success">
+                                        ${{ number_format($stock->sale_rate, 2) }}
+                                    </strong>
                                 </td>
-                                <td>${{ number_format($stock->mrp, 2) }}</td>
-                                <td>${{ number_format($stock->rate, 2) }}</td>
                                 <td>
                                     @if($stock->qty == 0)
                                         <span class="badge badge-danger">
@@ -79,7 +72,7 @@
                             </tr>
                             @empty
                             <tr>
-                                <td colspan="10" class="text-center text-muted py-4">
+                                <td colspan="7" class="text-center text-muted py-4">
                                     <i class="mdi mdi-package-variant font-30"></i><br>
                                     No stock yet. Add stock via
                                     <a href="{{ route('stockin.create') }}">Stock In</a>.

@@ -40,7 +40,7 @@
                 <div class="d-flex justify-content-between align-items-center m-b-20">
                     <h4 class="card-title mb-0">Stock In Report</h4>
                     <span class="badge badge-info badge-pill font-14">
-                        Total Cost : ${{ number_format($totalCost, 2) }}
+                        Total Cost Price : ${{ number_format($totalCost, 2) }}
                     </span>
                 </div>
                 <div class="table-responsive">
@@ -52,7 +52,7 @@
                                 <th>Transaction ID</th>
                                 <th>Reference No</th>
                                 <th>Publisher</th>
-                                <th>Total Amount</th>
+                                <th>Cost Price</th>
                                 <th>Status</th>
                             </tr>
                         </thead>
@@ -67,8 +67,8 @@
                                 <td>{{ $stockin->reference_number ?? '—' }}</td>
                                 <td>{{ $stockin->publisher->company_name ?? '—' }}</td>
                                 <td>
-                                    <strong>
-                                        ${{ number_format($stockin->total_cost, 2) }}
+                                    <strong class="text-danger">
+                                        ${{ number_format($stockin->cost_price, 2) }}
                                     </strong>
                                 </td>
                                 <td>

@@ -37,7 +37,7 @@ class ReportController extends Controller
         }
 
         $stockins   = $query->latest()->get();
-        $totalCost  = $stockins->sum('total_cost');
+        $totalCost = $stockins->sum('cost_price');
 
         return view('admin.reports.stockin', compact('stockins', 'totalCost'));
     }

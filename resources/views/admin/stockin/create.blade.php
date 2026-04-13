@@ -26,6 +26,7 @@
                 <form action="{{ route('stockin.store') }}" method="POST">
                     @csrf
 
+                    {{-- Publisher --}}
                     <div class="form-group">
                         <label>Publisher <span class="text-danger">*</span></label>
                         <select name="publisher_id"
@@ -44,6 +45,7 @@
                         @enderror
                     </div>
 
+                    {{-- Game --}}
                     <div class="form-group">
                         <label>Game Received <span class="text-danger">*</span></label>
                         <select name="game_id"
@@ -62,6 +64,7 @@
                         @enderror
                     </div>
 
+                    {{-- Quantity + Reference --}}
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
@@ -86,8 +89,62 @@
                         </div>
                     </div>
 
+                    {{-- Cost Price + Sale Rate --}}
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>
+                                    Cost Price (per unit)
+                                    <span class="text-danger">*</span>
+                                    <small class="text-muted">— what we paid the publisher</small>
+                                </label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">$</span>
+                                    </div>
+                                    <input type="number" name="cost_price"
+                                           class="form-control @error('cost_price') is-invalid @enderror"
+                                           value="{{ old('cost_price', 0) }}"
+                                           step="0.01" min="0" required>
+                                </div>
+                                @error('cost_price')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>
+                                    Sale Rate (per unit)
+                                    <span class="text-danger">*</span>
+                                    <small class="text-muted">— price for customers</small>
+                                </label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">$</span>
+                                    </div>
+                                    <input type="number" name="sale_rate"
+                                           class="form-control @error('sale_rate') is-invalid @enderror"
+                                           value="{{ old('sale_rate', 0) }}"
+                                           step="0.01" min="0" required>
+                                </div>
+                                @error('sale_rate')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+                    </div>
+
+                    {{-- Profit preview --}}
+                    <div class="alert alert-light border m-b-20">
+                        <i class="mdi mdi-calculator text-success m-r-5"></i>
+                        Profit per unit :
+                        <strong id="profitPreview" class="text-success">$0.00</strong>
+                    </div>
+
+                    {{-- Arrival Date + Payment Status --}}
+                    <div class="row">
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label>Arrival Date <span class="text-danger">*</span></label>
                                 <input type="date" name="arrival_date"
@@ -96,21 +153,7 @@
                                        required>
                             </div>
                         </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label>Total Cost <span class="text-danger">*</span></label>
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">$</span>
-                                    </div>
-                                    <input type="number" name="total_cost"
-                                           class="form-control"
-                                           value="{{ old('total_cost', 0) }}"
-                                           step="0.01" min="0" required>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label>Payment Status <span class="text-danger">*</span></label>
                                 <select name="payment_status" class="form-control" required>
@@ -126,40 +169,27 @@
                     </div>
 
                     <a href="{{ route('stockin.index') }}" class="btn btn-secondary">Cancel</a>
-                    <button type="submit" class="btn btn-primary">Save & Update Stock</button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="mdi mdi-check m-r-5"></i> Save & Update Stock
+                    </button>
                 </form>
             </div>
         </div>
     </div>
-
-    {{-- Info box --}}
-    <div class="col-lg-4">
-        <div class="card border-left-info">
-            <div class="card-body">
-                <h5 class="card-title">
-                    <i class="mdi mdi-information text-info"></i> How it works
-                </h5>
-                <ul class="list-unstyled text-muted small">
-                    <li class="mb-2">
-                        <i class="mdi mdi-check text-success"></i>
-                        Select the publisher who delivered the game
-                    </li>
-                    <li class="mb-2">
-                        <i class="mdi mdi-check text-success"></i>
-                        Select which game was received
-                    </li>
-                    <li class="mb-2">
-                        <i class="mdi mdi-check text-success"></i>
-                        Enter the quantity received
-                    </li>
-                    <li class="mb-2">
-                        <i class="mdi mdi-arrow-up text-primary"></i>
-                        <strong>Stock quantity will increase automatically</strong>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-
 </div>
 @endsection
+
+@push('scripts')
+<script>
+function calcProfit() {
+    const cost = parseFloat(document.querySelector('[name=cost_price]').value) || 0;
+    const rate = parseFloat(document.querySelector('[name=sale_rate]').value) || 0;
+    const profit = rate - cost;
+    const el = document.getElementById('profitPreview');
+    el.textContent = '$' + profit.toFixed(2);
+    el.className = profit >= 0 ? 'text-success' : 'text-danger';
+}
+document.querySelector('[name=cost_price]').addEventListener('input', calcProfit);
+document.querySelector('[name=sale_rate]').addEventListener('input', calcProfit);
+</script>
+@endpush

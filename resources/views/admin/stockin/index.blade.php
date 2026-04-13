@@ -36,14 +36,16 @@
                                 <th>Transaction ID</th>
                                 <th>Publisher</th>
                                 <th>Game Received</th>
-                                <th>Qty Received</th>
+                                <th>Qty</th>
+                                <th>Cost Price</th>
+                                <th>Sale Rate</th>
                                 <th>Reference No</th>
                                 <th>Arrival Date</th>
-                                <th>Total Cost</th>
-                                <th>Payment Status</th>
+                                <th>Payment</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
+                        
                         <tbody>
                             @forelse($stockins as $index => $stockin)
                             <tr>
@@ -52,8 +54,7 @@
                                 <td>{{ $stockin->publisher->company_name ?? '—' }}</td>
                                 <td>
                                     @if($stockin->game)
-                                        <strong>{{ $stockin->game->title }}</strong>
-                                        <br>
+                                        <strong>{{ $stockin->game->title }}</strong><br>
                                         <span class="badge badge-info">
                                             {{ $stockin->game->platform }}
                                         </span>
@@ -66,12 +67,16 @@
                                         {{ $stockin->quantity_received }} units
                                     </span>
                                 </td>
+                                <td class="text-danger">
+                                    ${{ number_format($stockin->cost_price, 2) }}
+                                </td>
+                                <td class="text-success">
+                                    ${{ number_format($stockin->sale_rate, 2) }}
+                                </td>
                                 <td>{{ $stockin->reference_number ?? '—' }}</td>
                                 <td>
-                                    {{ \Carbon\Carbon::parse($stockin->arrival_date)
-                                        ->format('d/m/Y') }}
+                                    {{ \Carbon\Carbon::parse($stockin->arrival_date)->format('d/m/Y') }}
                                 </td>
-                                <td>${{ number_format($stockin->total_cost, 2) }}</td>
                                 <td>
                                     @if($stockin->payment_status == 'paid')
                                         <span class="badge badge-success">Paid</span>
@@ -83,12 +88,12 @@
                                 </td>
                                 <td>
                                     <a href="{{ route('stockin.edit', $stockin) }}"
-                                       class="btn btn-sm btn-info">
+                                    class="btn btn-sm btn-info">
                                         <i class="mdi mdi-pencil"></i> Edit
                                     </a>
                                     <form action="{{ route('stockin.destroy', $stockin) }}"
-                                          method="POST" class="d-inline"
-                                          onsubmit="return confirm('Delete this entry and reverse stock?')">
+                                        method="POST" class="d-inline"
+                                        onsubmit="return confirm('Delete this entry and reverse stock?')">
                                         @csrf
                                         @method('DELETE')
                                         <button class="btn btn-sm btn-danger">
@@ -99,7 +104,7 @@
                             </tr>
                             @empty
                             <tr>
-                                <td colspan="10" class="text-center text-muted py-4">
+                                <td colspan="11" class="text-center text-muted py-4">
                                     No stock in entries found.
                                     <a href="{{ route('stockin.create') }}">Add first entry</a>
                                 </td>

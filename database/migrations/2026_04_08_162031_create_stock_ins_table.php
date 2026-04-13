@@ -18,9 +18,15 @@ return new class extends Migration
               ->nullable()
               ->constrained()
               ->onDelete('set null');
+        $table->foreignId('game_id')
+              ->nullable()
+              ->constrained()
+              ->onDelete('set null');
+        $table->integer('quantity_received')->default(0);
+        $table->decimal('cost_price', 8, 2)->default(0);
+        $table->decimal('sale_rate', 8, 2)->default(0);
         $table->string('reference_number', 100)->nullable();
         $table->date('arrival_date');
-        $table->decimal('total_cost', 10, 2)->default(0);
         $table->enum('payment_status', ['paid', 'pending', 'partial'])
               ->default('pending');
         $table->timestamps();

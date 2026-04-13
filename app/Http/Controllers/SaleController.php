@@ -26,13 +26,12 @@ class SaleController extends Controller
         ->orderBy('title')
         ->get();
 
-    // Préparer les données JSON proprement
     $gamesJson = $games->map(function($g) {
         return [
             'id'    => $g->id,
             'title' => $g->title . ' (' . $g->platform . ')',
-            'price' => $g->stock ? (float)$g->stock->rate : 0,
-            'stock' => $g->stock ? (int)$g->stock->qty  : 0,
+            'price' => $g->stock ? (float)$g->stock->sale_rate : 0, 
+            'stock' => $g->stock ? (int)$g->stock->qty : 0,
         ];
     })->toJson();
 
@@ -74,7 +73,7 @@ class SaleController extends Controller
             // Calculer le total
             foreach ($request->games as $item) {
                 $stock        = GameStock::where('game_id', $item['id'])->first();
-                $unitPrice    = $stock->rate ?? 0;
+                $unitPrice = $stock->sale_rate ?? 0;
                 $totalAmount += $unitPrice * $item['qty'];
             }
 
@@ -94,7 +93,7 @@ class SaleController extends Controller
             // Créer les items + DIMINUER le stock
             foreach ($request->games as $item) {
                 $stock     = GameStock::where('game_id', $item['id'])->first();
-                $unitPrice = $stock->rate ?? 0;
+                $unitPrice = $stock->sale_rate ?? 0;
                 $subtotal  = $unitPrice * $item['qty'];
 
                 SaleItem::create([
