@@ -11,6 +11,12 @@
         <button type="button" class="close" data-dismiss="alert"><span>&times;</span></button>
     </div>
 @endif
+@if(session('error'))
+    <div class="alert alert-danger alert-dismissible fade show">
+        {{ session('error') }}
+        <button type="button" class="close" data-dismiss="alert"><span>&times;</span></button>
+    </div>
+@endif
 
 <div class="row">
     <div class="col-12">
@@ -29,6 +35,8 @@
                                 <th>#</th>
                                 <th>Transaction ID</th>
                                 <th>Publisher</th>
+                                <th>Game Received</th>
+                                <th>Qty Received</th>
                                 <th>Reference No</th>
                                 <th>Arrival Date</th>
                                 <th>Total Cost</th>
@@ -40,13 +48,28 @@
                             @forelse($stockins as $index => $stockin)
                             <tr>
                                 <td>{{ $index + 1 }}</td>
-                                <td>
-                                    <code>{{ $stockin->transaction_id }}</code>
-                                </td>
+                                <td><code>{{ $stockin->transaction_id }}</code></td>
                                 <td>{{ $stockin->publisher->company_name ?? '—' }}</td>
+                                <td>
+                                    @if($stockin->game)
+                                        <strong>{{ $stockin->game->title }}</strong>
+                                        <br>
+                                        <span class="badge badge-info">
+                                            {{ $stockin->game->platform }}
+                                        </span>
+                                    @else
+                                        <span class="text-muted">—</span>
+                                    @endif
+                                </td>
+                                <td>
+                                    <span class="badge badge-primary">
+                                        {{ $stockin->quantity_received }} units
+                                    </span>
+                                </td>
                                 <td>{{ $stockin->reference_number ?? '—' }}</td>
                                 <td>
-                                    {{ \Carbon\Carbon::parse($stockin->arrival_date)->format('d/m/Y') }}
+                                    {{ \Carbon\Carbon::parse($stockin->arrival_date)
+                                        ->format('d/m/Y') }}
                                 </td>
                                 <td>${{ number_format($stockin->total_cost, 2) }}</td>
                                 <td>
@@ -65,7 +88,7 @@
                                     </a>
                                     <form action="{{ route('stockin.destroy', $stockin) }}"
                                           method="POST" class="d-inline"
-                                          onsubmit="return confirm('Delete this entry?')">
+                                          onsubmit="return confirm('Delete this entry and reverse stock?')">
                                         @csrf
                                         @method('DELETE')
                                         <button class="btn btn-sm btn-danger">
@@ -76,7 +99,7 @@
                             </tr>
                             @empty
                             <tr>
-                                <td colspan="8" class="text-center text-muted py-4">
+                                <td colspan="10" class="text-center text-muted py-4">
                                     No stock in entries found.
                                     <a href="{{ route('stockin.create') }}">Add first entry</a>
                                 </td>

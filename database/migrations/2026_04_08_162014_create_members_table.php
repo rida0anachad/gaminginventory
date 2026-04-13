@@ -12,15 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('members', function (Blueprint $table) {
-        $table->id();
-        $table->string('member_id', 20)->unique();
-        $table->string('name', 100);
-        $table->string('contact_number', 50)->nullable();
-        $table->text('address')->nullable();
-        $table->string('favorite_genre', 80)->nullable();
-        $table->string('platform_preference', 80)->nullable();
-        $table->timestamps();
-    });
+            $table->id();
+            $table->timestamps();
+        });
     }
 
     /**

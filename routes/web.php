@@ -45,7 +45,9 @@ Route::middleware('auth')->group(function () {
     // game stock
     Route::middleware('auth')->group(function () {
     // ... routes existantes ...
-    Route::resource('gamestock', GameStockController::class);
+    //Route::resource('gamestock', GameStockController::class);
+    Route::get('gamestock', [GameStockController::class, 'index'])
+    ->name('gamestock.index');
 }); 
     // Stock In
     Route::middleware('auth')->group(function () {
