@@ -8,7 +8,7 @@
     <title>@yield('page-title', 'Gaming Inventory')</title>
 
     {{-- CSS --}}
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('assets/images/favicon.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('assets/images/logo-light-icon.png') }}">
     <link href="{{ asset('assets/libs/chartist/dist/chartist.min.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/extra-libs/c3/c3.min.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/extra-libs/jvector/jquery-jvectormap-2.0.2.css') }}" rel="stylesheet">
@@ -44,7 +44,7 @@
                             </b>
                             <span class="logo-text" style="font-size: 1.5rem; 
                             font-weight: 900; color: #fff; letter-spacing: 1px; 
-                            font-family: 'Poppins', sans-serif;
+                            font-family: 'Segoe UI', sans-serif;
                             position: relative; top: 3px;">
                             Game<span style="color: #a020f0;">Stock</span>
                             </span>
@@ -338,8 +338,7 @@
 
             {{-- Footer --}}
             <footer class="footer text-center">
-                All Rights Reserved by Nice admin. Designed and Developed by
-                <a href="https://wrappixel.com">WrapPixel</a>.
+                © {{ date('Y') }} GameStock. All Rights Reserved.
             </footer>
         </div>
         {{--  END PAGE WRAPPER  --}}
