@@ -10,6 +10,8 @@ use App\Http\Controllers\GameStockController;
 use App\Http\Controllers\StockInController;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\ProfileController;
+
 
 // authentification 
 Route::middleware('guest')->group(function () {
@@ -34,37 +36,41 @@ Route::middleware('auth')->group(function () {
 }); 
     // Members
     Route::middleware('auth')->group(function () {
-    // ... routes existantes ...
+    
     Route::resource('members', MemberController::class);
 });
     // Games
     Route::middleware('auth')->group(function () {
-    // ... routes existantes ...
+    
     Route::resource('games', GameController::class);
 });
     // game stock
     Route::middleware('auth')->group(function () {
-    // ... routes existantes ...
-    //Route::resource('gamestock', GameStockController::class);
+    
     Route::get('gamestock', [GameStockController::class, 'index'])
     ->name('gamestock.index');
 }); 
     // Stock In
     Route::middleware('auth')->group(function () {
-    // ... routes existantes ...
+    
     Route::resource('stockin', StockInController::class);
 });
     // Sales
     Route::middleware('auth')->group(function () {
-    // ... routes existantes ...
+    
     Route::resource('sales', SaleController::class);
 });
     // Reports
     Route::middleware('auth')->group(function () {
-    // ... routes existantes ...
+    
     Route::get('reports/sales', [ReportController::class, 'salesReport'])->name('reports.sales');
     Route::get('reports/stockin', [ReportController::class, 'stockInReport'])->name('reports.stockin');
 });
+    //myprofile
+    Route::middleware('auth')->group(function () {
+        Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+        Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    });
     
 
   //Route::middleware('auth')->group(function () {

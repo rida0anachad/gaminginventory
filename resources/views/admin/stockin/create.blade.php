@@ -96,7 +96,7 @@
                                 <label>
                                     Cost Price (per unit)
                                     <span class="text-danger">*</span>
-                                    <small class="text-muted">— what we paid the publisher</small>
+                                    
                                 </label>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
@@ -117,7 +117,7 @@
                                 <label>
                                     Sale Rate (per unit)
                                     <span class="text-danger">*</span>
-                                    <small class="text-muted">— price for customers</small>
+                                    
                                 </label>
                                 <div class="input-group">
                                     <div class="input-group-prepend">

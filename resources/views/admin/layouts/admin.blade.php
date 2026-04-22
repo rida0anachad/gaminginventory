@@ -26,7 +26,7 @@
 
     <div id="main-wrapper">
 
-        {{-- ===== TOPBAR ===== --}}
+        {{--  TOPBAR  --}}
         <header class="topbar">
             <nav class="navbar top-navbar navbar-expand-md navbar-dark">
                 <div class="navbar-header">
@@ -34,14 +34,17 @@
                         <i class="ti-menu ti-close"></i>
                     </a>
                     <div class="navbar-brand">
-                        <a href="{{ url('admin/dashboard') }}" class="logo">
+                        <a href="{{ route('dashboard') }}" class="logo">
                             <b class="logo-icon">
-                                <img src="{{ asset('assets/images/logo-icon.png') }}" alt="homepage" class="dark-logo">
-                                <img src="{{ asset('assets/images/logo-light-icon.png') }}" alt="homepage" class="light-logo">
+                                <img src="{{ asset('assets/images/logo-icon.png') }}"
+                                    alt="logo" class="dark-logo">
+                                <img src="{{ asset('assets/images/logo-light-icon.png') }}"
+                                    alt="logo" class="light-logo">
                             </b>
-                            <span class="logo-text">
-                                <img src="{{ asset('assets/images/logo-text.png') }}" alt="homepage" class="dark-logo">
-                                <img src="{{ asset('assets/images/logo-light-text.png') }}" class="light-logo" alt="homepage">
+                            <span class="logo-text"
+                                style="font-size:1.1rem; font-weight:700;
+                                        color:#fff; letter-spacing:1px;">
+                                GameStock
                             </span>
                         </a>
                         <a class="sidebartoggler d-none d-md-block" href="javascript:void(0)" data-sidebartype="mini-sidebar">
@@ -57,6 +60,8 @@
 
                 <div class="navbar-collapse collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav float-left mr-auto">
+                        {{--search box--}}
+                        {{--
                         <li class="nav-item search-box">
                             <a class="nav-link waves-effect waves-dark" href="javascript:void(0)">
                                 <div class="d-flex align-items-center">
@@ -68,12 +73,13 @@
                                 <input type="text" class="form-control" placeholder="Search &amp; enter">
                                 <a class="srh-btn"><i class="ti-close"></i></a>
                             </form>
-                        </li>
+                        </li> 
+                        --}}
                     </ul>
 
                     <ul class="navbar-nav float-right">
                         {{-- Messages --}}
-                        <li class="nav-item dropdown">
+                        {{-- <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" id="2"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="font-22 mdi mdi-email-outline"></i>
@@ -109,10 +115,10 @@
                                     </li>
                                 </ul>
                             </div>
-                        </li>
+                        </li>--}} 
 
                         {{-- Notifications --}}
-                        <li class="nav-item dropdown border-right">
+                        {{--<li class="nav-item dropdown border-right">
                             <a class="nav-link dropdown-toggle waves-effect waves-dark" href=""
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="mdi mdi-bell-outline font-22"></i>
@@ -134,7 +140,7 @@
                                     </li>
                                 </ul>
                             </div>
-                        </li>
+                        </li>--}}
 
                         {{-- User Profile --}}
                         <li class="nav-item dropdown">
@@ -145,26 +151,28 @@
                                     {{ Auth::user()->name }} <i class="mdi mdi-chevron-down"></i>
                                 </span>
                             </a>
+                            {{-- section de myprofile --}}
                             <div class="dropdown-menu dropdown-menu-right user-dd animated flipInY">
                                 <span class="with-arrow"><span class="bg-primary"></span></span>
                                 <div class="d-flex no-block align-items-center p-15 bg-primary text-white m-b-10">
-                                    <img src="{{ asset('assets/images/users/2.jpg') }}" alt="user" class="rounded-circle" width="60">
+                                    <img src="{{ asset('assets/images/users/2.jpg') }}"
+                                        alt="user" class="rounded-circle" width="60">
                                     <div class="m-l-10">
                                         <h4 class="mb-0">{{ Auth::user()->name }}</h4>
                                         <p class="mb-0">{{ Auth::user()->email }}</p>
                                     </div>
                                 </div>
-                                <a class="dropdown-item" href="javascript:void(0)"><i class="ti-user m-r-5 m-l-5"></i> My Profile</a>
-                                <a class="dropdown-item" href="javascript:void(0)"><i class="ti-wallet m-r-5 m-l-5"></i> My Balance</a>
-                                <a class="dropdown-item" href="javascript:void(0)"><i class="ti-email m-r-5 m-l-5"></i> Inbox</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="javascript:void(0)"><i class="ti-settings m-r-5 m-l-5"></i> Account Setting</a>
+                                <a class="dropdown-item" href="{{ route('profile.edit') }}">
+                                    <i class="ti-user m-r-5 m-l-5"></i> My Profile
+                                </a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="{{ route('logout') }}"
-                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                onclick="event.preventDefault();
+                                            document.getElementById('logout-form').submit();">
                                     <i class="fa fa-power-off m-r-5 m-l-5"></i> Logout
                                 </a>
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                <form id="logout-form" action="{{ route('logout') }}"
+                                    method="POST" class="d-none">
                                     @csrf
                                 </form>
                             </div>
@@ -173,9 +181,9 @@
                 </div>
             </nav>
         </header>
-        {{-- ===== END TOPBAR ===== --}}
+        {{--  END TOPBAR  --}}
 
-        {{-- ===== LEFT SIDEBAR ===== --}}
+        {{--  LEFT SIDEBAR  --}}
         <aside class="left-sidebar">
             <div class="scroll-sidebar">
                 <nav class="sidebar-nav">
@@ -294,9 +302,9 @@
                 </nav>
             </div>
         </aside>
-        {{-- ===== END LEFT SIDEBAR ===== --}}
+        {{--  END LEFT SIDEBAR  --}}
 
-        {{-- ===== PAGE WRAPPER ===== --}}
+        {{--  PAGE WRAPPER  --}}
         <div class="page-wrapper">
 
             {{-- Breadcrumb --}}
@@ -331,7 +339,7 @@
                 <a href="https://wrappixel.com">WrapPixel</a>.
             </footer>
         </div>
-        {{-- ===== END PAGE WRAPPER ===== --}}
+        {{--  END PAGE WRAPPER  --}}
 
     </div>
 
@@ -416,7 +424,7 @@
     </aside>
     <div class="chat-windows"></div>
 
-    {{-- ===== SCRIPTS ===== --}}
+    {{--  SCRIPTS  --}}
     <script src="{{ asset('assets/libs/jquery/dist/jquery.min.js') }}"></script>
     <script src="{{ asset('assets/libs/popper.js/dist/umd/popper.min.js') }}"></script>
     <script src="{{ asset('assets/libs/bootstrap/dist/js/bootstrap.min.js') }}"></script>

@@ -68,12 +68,12 @@
                                     <option value="">-- Select Game --</option>
                                     @foreach($games as $game)
                                         <option value="{{ $game->id }}"
-                                                data-price="{{ $game->stock->rate ?? 0 }}"
+                                                data-price="{{ $game->stock->sale_rate ?? 0 }}"
                                                 data-stock="{{ $game->stock->qty ?? 0 }}">
                                             {{ $game->title }}
                                             ({{ $game->platform }})
                                             — Stock: {{ $game->stock->qty ?? 0 }}
-                                            — ${{ number_format($game->stock->rate ?? 0, 2) }}
+                                            — ${{ number_format($game->stock->sale_rate ?? 0, 2) }}
                                         </option>
                                     @endforeach
                                 </select>
@@ -91,7 +91,7 @@
                                        style="background:#f5f5f5">
                             </div>
                             <div class="col-md-2">
-                                <label>Subtotal</label>
+                                <label>total</label>
                                 <input type="text" class="form-control subtotal"
                                        value="0.00" readonly
                                        style="background:#f5f5f5">

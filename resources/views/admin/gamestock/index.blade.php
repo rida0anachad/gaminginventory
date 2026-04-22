@@ -12,12 +12,6 @@
     </div>
 @endif
 
-<div class="alert alert-info">
-    <i class="mdi mdi-information m-r-5"></i>
-    Stock quantities are updated automatically :
-    <strong>Stock In</strong> increases stock —
-    <strong>Sales</strong> decrease stock.
-</div>
 
 <div class="row">
     <div class="col-12">
