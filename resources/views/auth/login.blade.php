@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="{{asset('assets/images/favicon.png')}}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{asset('assets/images/logo-light-icon.png')}}">
     <title>Gaming Inventory - Connexion</title>
     <!-- Custom CSS -->
     <link href="{{asset('dist/css/style.min.css')}}" rel="stylesheet">
@@ -40,10 +40,14 @@
         <!-- ============================================================== -->
         <div class="auth-wrapper d-flex no-block justify-content-center align-items-center" style="background:url({{asset('assets/images/big/auth-bg.jpg')}}) no-repeat center center;">
             <div class="auth-box">
-    <div id="loginform">
-        <div class="logo">
-            <span class="db"><img src="{{asset('assets/images/logo-icon.png')}}" alt="logo" /></span>
-            <h5 class="font-medium m-b-20">Sign In to Admin</h5>
+            <div id="loginform">
+                <div class="logo text-center">
+            <span class="db">
+                <img src="{{asset('assets/images/logo-light-icon.png')}}" 
+                    alt="logo" 
+                    style="width: 45px; height: auto;" />
+            </span>
+            <h5 class="font-medium m-b-20">Sign In</h5>
         </div>
         <div class="row">
             <div class="col-12">
@@ -86,7 +90,6 @@
                             <div class="custom-control custom-checkbox">
                                 <input type="checkbox" name="remember" class="custom-control-input" id="customCheck1">
                                 <label class="custom-control-label" for="customCheck1">Remember me</label>
-                                <a href="javascript:void(0)" id="to-recover" class="text-dark float-right"><i class="fa fa-lock m-r-5"></i> Forgot pwd?</a>
                             </div>
                         </div>
                     </div>
@@ -103,28 +106,6 @@
                     </div>
                 </form>
             </div>
-        </div>
-    </div>
-
-    <div id="recoverform" style="display:none;">
-        <div class="logo">
-            <span class="db"><img src="{{asset('assets/images/logo-icon.png')}}" alt="logo" /></span>
-            <h5 class="font-medium m-b-20">Recover Password</h5>
-            <span>Enter your Email and instructions will be sent to you!</span>
-        </div>
-        <div class="row m-t-20">
-            <form class="col-12" action="#">
-                <div class="form-group row">
-                    <div class="col-12">
-                        <input class="form-control form-control-lg" type="email" required="" placeholder="Email">
-                    </div>
-                </div>
-                <div class="row m-t-20">
-                    <div class="col-12">
-                        <button class="btn btn-block btn-lg btn-danger" type="submit">Reset</button>
-                    </div>
-                </div>
-            </form>
         </div>
     </div>
 </div>
@@ -161,10 +142,7 @@
     // ============================================================== 
     // Login and Recover Password 
     // ============================================================== 
-    $('#to-recover').on("click", function() {
-        $("#loginform").slideUp();
-        $("#recoverform").fadeIn();
-    });
+    
     </script>
 </body>
 

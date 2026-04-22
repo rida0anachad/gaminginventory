@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" type="image/png" sizes="16x16" href="{{asset('assets/images/favicon.png')}}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{asset('assets/images/logo-light-icon.png')}}">
     <title>Gaming Inventory - Inscription</title>
     <link href="{{asset('dist/css/style.min.css')}}" rel="stylesheet">
 </head>
@@ -22,7 +22,9 @@
             <div class="auth-box">
                 <div class="logo">
                     <span class="db">
-                        <img src="{{asset('assets/images/logo-icon.png')}}" alt="logo" />
+                        <img src="{{asset('assets/images/logo-light-icon.png')}}" 
+                            alt="logo" 
+                            style="width: 45px; height: auto;" />
                     </span>
                     <h5 class="font-medium m-b-20">Create an Account</h5>
                 </div>
