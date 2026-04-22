@@ -43,8 +43,8 @@
                                     alt="logo" class="light-logo" style="height: 35px; width: auto; object-fit: contain;">
                             </b>
                             <span class="logo-text" style="font-size: 1.5rem; 
-                            font-weight: 900; color: #fff; letter-spacing: 1px; 
-                            font-family: 'Segoe UI', sans-serif;
+                            font-weight: 1000; color: #fff; letter-spacing: 1px; 
+                            font-family: 'Trebuchet MS', sans-serif;
                             position: relative; top: 3px;">
                             Game<span style="color: #a020f0;">Stock</span>
                             </span>
