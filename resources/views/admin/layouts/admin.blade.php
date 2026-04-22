@@ -36,16 +36,19 @@
                     <div class="navbar-brand">
                         <a href="{{ route('dashboard') }}" class="logo">
                             <b class="logo-icon">
-                                <img src="{{ asset('assets/images/logo-icon.png') }}"
-                                    alt="logo" class="dark-logo">
                                 <img src="{{ asset('assets/images/logo-light-icon.png') }}"
-                                    alt="logo" class="light-logo">
+                                    alt="logo" class="dark-logo" 
+                                    style="height: 35px; width: auto; object-fit: contain;">
+                                <img src="{{ asset('assets/images/logo-light-icon.png') }}"
+                                    alt="logo" class="light-logo" style="height: 35px; width: auto; object-fit: contain;">
                             </b>
-                            <span class="logo-text"
-                                style="font-size:1.1rem; font-weight:700;
-                                        color:#fff; letter-spacing:1px;">
-                                GameStock
+                            <span class="logo-text" style="font-size: 1.5rem; 
+                            font-weight: 900; color: #fff; letter-spacing: 1px; 
+                            font-family: 'Poppins', sans-serif;
+                            position: relative; top: 3px;">
+                            Game<span style="color: #a020f0;">Stock</span>
                             </span>
+
                         </a>
                         <a class="sidebartoggler d-none d-md-block" href="javascript:void(0)" data-sidebartype="mini-sidebar">
                             <i class="mdi mdi-toggle-switch mdi-toggle-switch-off font-20"></i>
