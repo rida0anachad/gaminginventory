@@ -44,8 +44,8 @@ class StockInController extends Controller
         ]);
 
         try {
-            $count          = StockIn::count() + 1;
-            $transaction_id = 'TXN-' . str_pad($count, 5, '0', STR_PAD_LEFT);
+            $lastId = StockIn::max('id') ?? 0;
+            $transaction_id = 'TXN-' . str_pad($lastId + 1, 5, '0', STR_PAD_LEFT);
 
             // 1. Créer l'entrée Stock In
             StockIn::create([

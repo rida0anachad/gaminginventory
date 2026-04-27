@@ -65,8 +65,8 @@ class SaleController extends Controller
 
         // Transaction DB — tout ou rien
         DB::transaction(function () use ($request) {
-            $count   = Sale::count() + 1;
-            $sale_no = 'SALE-' . str_pad($count, 5, '0', STR_PAD_LEFT);
+            $lastId  = Sale::max('id') ?? 0;
+            $sale_no = 'SALE-' . str_pad($lastId + 1, 5, '0', STR_PAD_LEFT);
 
             $totalAmount = 0;
 

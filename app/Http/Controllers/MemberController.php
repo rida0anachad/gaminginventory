@@ -31,8 +31,8 @@ class MemberController extends Controller
         ]);
 
         try {
-            $count = Member::count() + 1;
-            $member_id = 'MEM-' . str_pad($count, 4, '0', STR_PAD_LEFT);
+            $lastId = Member::max('id') ?? 0;
+            $member_id = 'MEM-' . str_pad($lastId + 1, 4, '0', STR_PAD_LEFT);
 
             Member::create([
                 'member_id'           => $member_id,
@@ -84,14 +84,17 @@ class MemberController extends Controller
 
     public function destroy(Member $member)
     {
-        try {
-            $member->delete();
-            return redirect()->route('members.index')
-                ->with('success', 'Member deleted successfully.');
-
-        } catch (\Exception $e) {
-            return back()
-                ->with('error', 'Error deleting member. Please try again.');
+    try {
+        if ($member->sales()->exists()) {
+            return back()->with('error', 'Cannot delete member with existing sales records.');
         }
+
+        $member->delete();
+        return redirect()->route('members.index')
+            ->with('success', 'Member deleted successfully.');
+
+    } catch (\Exception $e) {
+        return back()->with('error', 'Error deleting member. Please try again.');
+    }
     }
 }

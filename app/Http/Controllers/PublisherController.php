@@ -27,9 +27,9 @@ class PublisherController extends Controller
             'address'        => 'nullable|string',
         ]);
 
-        // Auto-generate publisher_id like PUB-0001
-        $count = Publisher::count() + 1;
-        $publisher_id = 'PUB-' . str_pad($count, 4, '0', STR_PAD_LEFT);
+        
+        $lastId= Publisher::max('id') ?? 0;
+        $publisher_id = 'PUB-' . str_pad($lastId + 1, 4, '0', STR_PAD_LEFT);
 
         Publisher::create([
             'publisher_id'   => $publisher_id,
@@ -67,8 +67,12 @@ class PublisherController extends Controller
 
     public function destroy(Publisher $publisher)
     {
-        $publisher->delete();
-        return redirect()->route('publishers.index')
-                         ->with('success', 'Publisher deleted successfully.');
+    if ($publisher->stockIns()->exists()) {
+        return back()->with('error', 'Cannot delete publisher with existing stock entries.');
+    }
+
+    $publisher->delete();
+    return redirect()->route('publishers.index')
+                     ->with('success', 'Publisher deleted successfully.');
     }
 }
