@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Game;
 use App\Models\Publisher;
+use App\Models\SaleItem;
+use App\Models\StockIn;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -40,7 +42,6 @@ class GameController extends Controller
         try {
             $posterPath = null;
 
-            // Upload poster si fourni
             if ($request->hasFile('poster')) {
                 $posterPath = $request->file('poster')
                     ->store('posters', 'public');
@@ -82,9 +83,7 @@ class GameController extends Controller
         try {
             $posterPath = $game->poster;
 
-            // Nouveau poster uploadé
             if ($request->hasFile('poster')) {
-                // Supprimer l'ancien
                 if ($game->poster) {
                     Storage::disk('public')->delete($game->poster);
                 }
@@ -112,14 +111,37 @@ class GameController extends Controller
     public function destroy(Game $game)
     {
         try {
+            // Garde 1 — jeu a du stock disponible
+            if ($game->stock && $game->stock->qty > 0) {
+                return back()->with('error',
+                    'Cannot delete "' . $game->title
+                    . '" — it has ' . $game->stock->qty . ' units in stock.'
+                    . ' Delete the stock first.');
+            }
+
+            // Garde 2 — jeu a des ventes existantes
+            if (SaleItem::where('game_id', $game->id)->exists()) {
+                return back()->with('error',
+                    'Cannot delete "' . $game->title
+                    . '" — it has existing sales records.');
+            }
+
+            // Garde 3 — jeu a des entrées stock in
+            if (StockIn::where('game_id', $game->id)->exists()) {
+                return back()->with('error',
+                    'Cannot delete "' . $game->title
+                    . '" — it has existing stock in records.');
+            }
+
             // Supprimer le poster du storage
             if ($game->poster) {
                 Storage::disk('public')->delete($game->poster);
             }
+
             $game->delete();
 
             return redirect()->route('games.index')
-                ->with('success', 'Game deleted successfully.');
+                ->with('success', 'Game "' . $game->title . '" deleted successfully.');
 
         } catch (\Exception $e) {
             return back()

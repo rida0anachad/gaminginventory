@@ -27,20 +27,25 @@ class PublisherController extends Controller
             'address'        => 'nullable|string',
         ]);
 
-        
-        $lastId= Publisher::max('id') ?? 0;
-        $publisher_id = 'PUB-' . str_pad($lastId + 1, 4, '0', STR_PAD_LEFT);
+        try {
+            $lastId       = Publisher::max('id') ?? 0;
+            $publisher_id = 'PUB-' . str_pad($lastId + 1, 4, '0', STR_PAD_LEFT);
 
-        Publisher::create([
-            'publisher_id'   => $publisher_id,
-            'company_name'   => $request->company_name,
-            'email'          => $request->email,
-            'contact_number' => $request->contact_number,
-            'address'        => $request->address,
-        ]);
+            Publisher::create([
+                'publisher_id'   => $publisher_id,
+                'company_name'   => $request->company_name,
+                'email'          => $request->email,
+                'contact_number' => $request->contact_number,
+                'address'        => $request->address,
+            ]);
 
-        return redirect()->route('publishers.index')
-                         ->with('success', 'Publisher added successfully.');
+            return redirect()->route('publishers.index')
+                ->with('success', 'Publisher added successfully.');
+
+        } catch (\Exception $e) {
+            return back()->withInput()
+                ->with('error', 'Error adding publisher. Please try again.');
+        }
     }
 
     public function edit(Publisher $publisher)
@@ -57,22 +62,41 @@ class PublisherController extends Controller
             'address'        => 'nullable|string',
         ]);
 
-        $publisher->update($request->only([
-            'company_name', 'email', 'contact_number', 'address'
-        ]));
+        
+        try {
+            $publisher->update($request->only([
+                'company_name', 'email', 'contact_number', 'address'
+            ]));
 
-        return redirect()->route('publishers.index')
-                         ->with('success', 'Publisher updated successfully.');
+            return redirect()->route('publishers.index')
+                ->with('success', 'Publisher updated successfully.');
+
+        } catch (\Exception $e) {
+            return back()->withInput()
+                ->with('error', 'Error updating publisher. Please try again.');
+        }
     }
 
     public function destroy(Publisher $publisher)
     {
-    if ($publisher->stockIns()->exists()) {
-        return back()->with('error', 'Cannot delete publisher with existing stock entries.');
-    }
+        try {
+            if ($publisher->games()->exists()) {
+                return back()->with('error',
+                    'Cannot delete publisher with existing games.');
+            }
 
-    $publisher->delete();
-    return redirect()->route('publishers.index')
-                     ->with('success', 'Publisher deleted successfully.');
+            if ($publisher->stockIns()->exists()) {
+                return back()->with('error',
+                    'Cannot delete publisher with existing stock entries.');
+            }
+
+            $publisher->delete();
+
+            return redirect()->route('publishers.index')
+                ->with('success', 'Publisher deleted successfully.');
+
+        } catch (\Exception $e) {
+            return back()->with('error', 'Error deleting publisher. Please try again.');
+        }
     }
 }

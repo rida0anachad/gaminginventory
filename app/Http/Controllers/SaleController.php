@@ -52,7 +52,7 @@ class SaleController extends Controller
             'games.required'     => 'Please add at least one game.',
         ]);
 
-        // Vérifier stock disponible pour chaque jeu
+        //si stock disponible pour chaque jeu ?
         foreach ($request->games as $item) {
             $stock = GameStock::where('game_id', $item['id'])->first();
             $game  = Game::find($item['id']);
@@ -64,13 +64,14 @@ class SaleController extends Controller
         }
 
         // Transaction DB — tout ou rien
+        try {
         DB::transaction(function () use ($request) {
             $lastId  = Sale::max('id') ?? 0;
             $sale_no = 'SALE-' . str_pad($lastId + 1, 5, '0', STR_PAD_LEFT);
 
             $totalAmount = 0;
 
-            // Calculer le total
+            // total
             foreach ($request->games as $item) {
                 $stock        = GameStock::where('game_id', $item['id'])->first();
                 $unitPrice = $stock->sale_rate ?? 0;
@@ -111,6 +112,10 @@ class SaleController extends Controller
 
         return redirect()->route('sales.index')
             ->with('success', 'Sale saved and stock updated.');
+    } catch (\Exception $e) {
+        return back()->withInput()
+            ->with('error', 'Error creating sale : ' . $e->getMessage());
+    }
     }
 
     public function show(Sale $sale)
