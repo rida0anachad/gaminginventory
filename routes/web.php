@@ -15,26 +15,26 @@ use App\Http\Controllers\ProfileController;
 
 // authentification 
 Route::middleware('guest')->group(function () {
-    // Login
+    // login
     Route::get('/', [AuthController::class, 'showLogin'])->name('login');
     Route::post('/', [AuthController::class, 'login']);
 
-    // Register
+    //register
     Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
     Route::post('/register', [AuthController::class, 'register']);
 });
 
 Route::middleware('auth')->group(function () {
-    // Dashboard
+    //dashboard
    Route::get('/admin/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
 
-    // Logout
+    //logout
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
     
-    // Publishers
+    // publishers
     Route::resource('publishers', PublisherController::class);
 }); 
-    // Members
+    //members
     Route::middleware('auth')->group(function () {
     
     Route::resource('members', MemberController::class);
@@ -50,17 +50,17 @@ Route::middleware('auth')->group(function () {
     Route::get('gamestock', [GameStockController::class, 'index'])
     ->name('gamestock.index');
 }); 
-    // Stock In
+    //stock In
     Route::middleware('auth')->group(function () {
     
     Route::resource('stockin', StockInController::class);
 });
-    // Sales
+    //Sales
     Route::middleware('auth')->group(function () {
     
     Route::resource('sales', SaleController::class);
 });
-    // Reports
+    //reports
     Route::middleware('auth')->group(function () {
     
     Route::get('reports/sales', [ReportController::class, 'salesReport'])->name('reports.sales');
@@ -71,21 +71,10 @@ Route::middleware('auth')->group(function () {
         Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
         Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
     });
+
     
-
-  //Route::middleware('auth')->group(function () {
-    //Route::get('/admin/dashboard', function () {
-      //  return view('admin.dashboard.list');  // ← changer ici
-    //})->name('dashboard');
-//});
-// Logout (protégé par auth)
-//Route::post('/logout', [AuthController::class, 'logout'])
-  //  ->name('logout')
-   // ->middleware('auth');
-
-
-//Route::get('admin/dashboard', [DashboardController::class, 'dashboard']);
-//Route::middleware('auth')->group(function () {
-    // On utilise le contrôleur pour charger la vue complexe
-  //  Route::get('admin/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
-//});
+    /*Route::middleware('auth')->group(function () {
+    Route::get('/admin/dashboard', function () {
+       return view('admin.dashboard.list'); 
+    })->name('dashboard'); 
+    });*/

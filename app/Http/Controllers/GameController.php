@@ -111,7 +111,6 @@ class GameController extends Controller
     public function destroy(Game $game)
     {
         try {
-            // Garde 1 — jeu a du stock disponible
             if ($game->stock && $game->stock->qty > 0) {
                 return back()->with('error',
                     'Cannot delete "' . $game->title
@@ -119,21 +118,18 @@ class GameController extends Controller
                     . ' Delete the stock first.');
             }
 
-            // Garde 2 — jeu a des ventes existantes
             if (SaleItem::where('game_id', $game->id)->exists()) {
                 return back()->with('error',
                     'Cannot delete "' . $game->title
                     . '" — it has existing sales records.');
             }
 
-            // Garde 3 — jeu a des entrées stock in
             if (StockIn::where('game_id', $game->id)->exists()) {
                 return back()->with('error',
                     'Cannot delete "' . $game->title
                     . '" — it has existing stock in records.');
             }
 
-            // Supprimer le poster du storage
             if ($game->poster) {
                 Storage::disk('public')->delete($game->poster);
             }

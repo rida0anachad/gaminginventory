@@ -47,7 +47,6 @@ class StockInController extends Controller
             $lastId = StockIn::max('id') ?? 0;
             $transaction_id = 'TXN-' . str_pad($lastId + 1, 5, '0', STR_PAD_LEFT);
 
-            // 1. Créer l'entrée Stock In
             StockIn::create([
                 'transaction_id'    => $transaction_id,
                 'publisher_id'      => $request->publisher_id,
@@ -60,7 +59,6 @@ class StockInController extends Controller
                 'payment_status'    => $request->payment_status,
             ]);
 
-            // 2. Mettre à jour GameStock
             $stock = GameStock::where('game_id', $request->game_id)->first();
 
             if ($stock) {
@@ -110,13 +108,11 @@ class StockInController extends Controller
         ]);
 
         try {
-            // Annuler l'ancien stock
             $oldStock = GameStock::where('game_id', $stockin->game_id)->first();
             if ($oldStock) {
                 $oldStock->decrement('qty', $stockin->quantity_received);
             }
 
-            // Appliquer le nouveau stock
             $newStock = GameStock::where('game_id', $request->game_id)->first();
             if ($newStock) {
                 $newStock->increment('qty', $request->quantity_received);
@@ -152,7 +148,7 @@ class StockInController extends Controller
     public function destroy(StockIn $stockin)
     {
         try {
-            // Annuler le stock
+            
             $stock = GameStock::where('game_id', $stockin->game_id)->first();
             if ($stock) {
                 $stock->decrement('qty', $stockin->quantity_received);

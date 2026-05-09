@@ -9,16 +9,16 @@ use App\Models\User;
 
 class AuthController extends Controller
 {
-    // ── Afficher le formulaire login ──────────────────────────
+    //afficher login form 
     public function showLogin()
     {
         return view('auth.login');
     }
 
-    // ── Traiter le formulaire login ───────────────────────────
+    //login form
     public function login(Request $request)
     {
-        // Validation côté serveur 
+        //cote server 
         $request->validate([
             'email'    => 'required|email',
             'password' => 'required|string',
@@ -28,26 +28,26 @@ class AuthController extends Controller
             'password.required' => 'Le mot de passe est obligatoire.',
         ]);
 
-        // Tentative de connexion
+        //tentative de cnx
         if (Auth::attempt($request->only('email', 'password'), 
                           $request->boolean('remember'))) {
-            $request->session()->regenerate(); // Sécurité : anti-fixation de session
+            $request->session()->regenerate(); //anti-fixation de session
             return redirect()->route('dashboard');
         }
 
-        // Échec : retour avec message d'erreur
+        // message d'erreur
         return back()
             ->withInput($request->only('email'))
             ->with('error', 'Identifiants incorrects. Vérifiez votre e-mail et mot de passe.');
     }
 
-    // ── Afficher le formulaire register ──────────────────────
+    //afficher register form 
     public function showRegister()
     {
         return view('auth.register');
     }
 
-    // ── Traiter le formulaire register ───────────────────────
+    //register form
     public function register(Request $request)
     {
         $request->validate([
@@ -78,7 +78,7 @@ class AuthController extends Controller
         }
     }
 
-    // ── Déconnexion ───────────────────────────────────────────
+    //Déconnexion
     public function logout(Request $request)
     {
         Auth::logout();

@@ -71,7 +71,7 @@ class SaleController extends Controller
 
             $totalAmount = 0;
 
-            // total
+            //total
             foreach ($request->games as $item) {
                 $stock        = GameStock::where('game_id', $item['id'])->first();
                 $unitPrice = $stock->sale_rate ?? 0;
@@ -81,7 +81,7 @@ class SaleController extends Controller
             $discount  = $request->discount ?? 0;
             $netTotal  = $totalAmount - $discount;
 
-            // Créer la vente
+            //Créer la vente
             $sale = Sale::create([
                 'sale_no'      => $sale_no,
                 'member_id'    => $request->member_id,
@@ -91,7 +91,7 @@ class SaleController extends Controller
                 'net_total'    => $netTotal,
             ]);
 
-            // Créer les items + DIMINUER le stock
+            //créer items + diminuer stock
             foreach ($request->games as $item) {
                 $stock     = GameStock::where('game_id', $item['id'])->first();
                 $unitPrice = $stock->sale_rate ?? 0;
@@ -105,7 +105,7 @@ class SaleController extends Controller
                     'subtotal'   => $subtotal,
                 ]);
 
-                // DIMINUER le stock
+                // diminuer stock
                 $stock->decrement('qty', $item['qty']);
             }
         });
@@ -128,7 +128,6 @@ class SaleController extends Controller
     {
         try {
             DB::transaction(function () use ($sale) {
-                // Remettre le stock
                 foreach ($sale->items as $item) {
                     $stock = GameStock::where('game_id', $item->game_id)->first();
                     if ($stock) {
